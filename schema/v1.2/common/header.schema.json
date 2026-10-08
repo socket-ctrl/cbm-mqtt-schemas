@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/common/header.schema.json",
+  "title": "通用消息头 header",
+  "description": "MQTT 报文通用消息头（协议 3.1）。除网关心跳外，所有上行/下行报文均包含本消息头；井场级消息（Topic 无 {well_id} 层级，如汇管压力、视频算法）省略 well_id 字段。Topic 中的身份标识（{gw_id}/{wf_id}/{well_id}）必须与本消息头对应字段一致，接收方对身份不一致的消息记录后丢弃。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ver", "msg_id", "ts", "gw_id", "wf_id", "well_type"],
+  "properties": {
+    "ver": {
+      "type": "string",
+      "description": "消息版本号，与协议文档版本对应（V1.2 报文为 \"1.2\"）。版本前缀相同可向下兼容（如 V1.1 与 V1.0），不同前缀存在不兼容内容。",
+      "examples": ["1.2"]
+    },
+    "msg_id": {
+      "type": "string",
+      "description": "消息唯一标识，用于消息追踪和去重。网关上行数据类报文（prod/algo）由网关自动生成，格式不做要求，推荐 \"epoch毫秒-毫秒内自增序号\"（如 \"1758340800123-0\"）；响应类上行（ack/result/step_result）原样回显下行报文的 header.msg_id。"
+    },
+    "ts": {
+      "$ref": "defs.schema.json#/$defs/unix_ms",
+      "description": "消息时间戳，UNIX 毫秒时间戳（13 位数字字符串）"
+    },
+    "gw_id": {
+      "type": "string",
+      "description": "网关唯一标识，须与 Topic 中 {gw_id} 一致",
+      "examples": ["GW001"]
+    },
+    "wf_id": {
+      "type": "string",
+      "description": "井组唯一标识，须与 Topic 中 {wf_id} 一致",
+      "examples": ["WF001"]
+    },
+    "well_id": {
+      "type": "string",
+      "description": "单井唯一标识，须与 Topic 中 {well_id} 一致；井场级消息（Topic 无 {well_id} 层级）省略此字段"
+    },
+    "well_type": {
+      "type": "string",
+      "enum": ["jet_pump", "esp_pump"],
+      "description": "井类型：jet_pump(射流泵井) / esp_pump(电潜泵井)"
+    }
+  }
+}

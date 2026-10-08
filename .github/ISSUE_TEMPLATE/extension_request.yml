@@ -1,0 +1,36 @@
+name: 扩展申请
+description: 新增设备类型、算法、报文类型或枚举值（协议第七章扩展机制）
+labels: ["扩展申请", "待评审"]
+body:
+  - type: dropdown
+    id: ext_type
+    attributes:
+      label: 扩展类型
+      options:
+        - 新增设备/仪表类型
+        - 新增算法
+        - 现有报文新增参数
+        - 枚举值扩充
+        - 新增 Topic 类别
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: base_topic
+    attributes:
+      label: 挂载位置（新增 Topic 类别时必填）
+      description: 参照协议 7.x 扩展机制，如 /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/{new_device}
+  - type: textarea
+    id: design
+    attributes:
+      label: 数据结构设计
+      description: 建议的报文 JSON 示例、字段说明（名称/类型/单位/枚举/必填性）
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 业务场景
+      description: 该扩展支撑什么业务需求
+    validations:
+      required: true

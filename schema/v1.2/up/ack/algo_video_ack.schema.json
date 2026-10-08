@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/ack/algo_video_ack.schema.json",
+  "title": "视频算法配置指令确认回复",
+  "description": "网关→平台人工智能识别算法配置指令确认回复（协议 5.2.1）。Topic: /cbm/up/{gw_id}/{wf_id}/ack/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。网关在 header 中回显下行 msg_id，在 ack 中回显下行 cmd_id 与 AlgorithmNo。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "ack"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json",
+      "not": {
+        "required": ["well_id"]
+      }
+    },
+    "ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd_id", "AlgorithmNo", "ack_status", "ack_reason"],
+      "properties": {
+        "cmd_id": {
+          "type": "string",
+          "description": "对应的下行算法配置指令 ID，原样回显"
+        },
+        "AlgorithmNo": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "算法编号：1(人车识别) / 2(液位识别)"
+        },
+        "ack_status": {
+          "$ref": "../../common/defs.schema.json#/$defs/ack_status"
+        },
+        "ack_reason": {
+          "type": ["string", "null"],
+          "description": "确认原因说明，成功为 null；失败时如 \"参数错误\" 等"
+        }
+      }
+    }
+  }
+}

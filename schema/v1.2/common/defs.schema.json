@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/common/defs.schema.json",
+  "title": "公共可复用定义",
+  "description": "煤层气智能井场 MQTT 协议 V1.2 各报文 Schema 共用的可复用定义（UNIX 毫秒时间戳、控制指令基础结构、公共枚举等）。本文件仅作为定义容器，通过 JSON Pointer（#/$defs/...）被其他 Schema 引用，不直接用于校验完整报文。",
+  "type": "object",
+  "$defs": {
+    "unix_ms": {
+      "type": "string",
+      "pattern": "^\\d{13}$",
+      "description": "UNIX 毫秒时间戳（13 位数字字符串）",
+      "examples": ["1726992000000"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["online", "offline"],
+      "description": "设备通信状态：online(在线) / offline(离线)"
+    },
+    "run_status": {
+      "type": "string",
+      "enum": ["running", "stopped", "fault"],
+      "description": "工艺运行状态：running(运行) / stopped(停止) / fault(故障)"
+    },
+    "ctrl_mode": {
+      "type": "string",
+      "enum": ["auto", "manual"],
+      "description": "控制模式：auto(自动) / manual(手动)"
+    },
+    "prod_period": {
+      "type": "string",
+      "enum": ["drain_water", "increase_prod", "stable_prod", "decrease_prod"],
+      "description": "生命周期（生产制度）：drain_water(排水期) / increase_prod(提产期) / stable_prod(稳产期) / decrease_prod(递减期)"
+    },
+    "fault_code": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "故障代码，无故障时为 0；非 0 值含义见协议文档 4.1.1 节科达变频器故障代码表"
+    },
+    "fault_description": {
+      "type": ["string", "null"],
+      "description": "故障描述，无故障时为 null"
+    },
+    "ack_status": {
+      "type": "string",
+      "enum": ["accepted", "rejected", "partial"],
+      "description": "指令确认状态：accepted(已接受，开始执行) / rejected(被拒绝：参数错误、设备故障、指令互斥等) / partial(部分执行响应，预留，当前对外协议范围内无适用指令)"
+    },
+    "cmd_base": {
+      "type": "object",
+      "description": "控制指令基础结构（协议 5.1.1）。各 ctrl 通道 Schema 在其上追加约束：action 枚举与 value 必填性。",
+      "additionalProperties": false,
+      "required": ["cmd_id", "action", "timeout"],
+      "properties": {
+        "cmd_id": {
+          "type": "string",
+          "description": "指令唯一标识，网关在 ack 与 result 中原样回显",
+          "examples": ["CMD20240115001"]
+        },
+        "action": {
+          "type": "string",
+          "description": "动作类型，取值由各 ctrl 通道定义"
+        },
+        "value": {
+          "type": "number",
+          "description": "动作参数（可选，仅带参数动作携带），含义/单位/取值范围由各动作定义"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "网关侧执行超时时间，秒；超时未执行完毕时网关上报 execute_status=timeout"
+        }
+      }
+    }
+  }
+}

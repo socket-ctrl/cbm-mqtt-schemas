@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/prod/output_flow.schema.json",
+  "title": "产水流量计生产数据上报",
+  "description": "网关→平台生产数据（协议 4.2.3，产水流量计）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/output_flow。last_prod/daily_prod 统一口径：每日 08:00 日切点由累计流量估算。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device_type", "status", "instant_flow", "total_flow", "last_prod", "daily_prod"],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "output_flow",
+          "description": "设备类型：output_flow(产水流量计)"
+        },
+        "status": {
+          "$ref": "../../common/defs.schema.json#/$defs/status"
+        },
+        "instant_flow": {
+          "type": "number",
+          "description": "瞬时流量，m³/h"
+        },
+        "total_flow": {
+          "type": "number",
+          "description": "累计流量，m³"
+        },
+        "last_prod": {
+          "type": "number",
+          "description": "上一天累积量，m³（每日 08:00 计算此前 24h 值）"
+        },
+        "daily_prod": {
+          "type": "number",
+          "description": "日产量，m³（自最近 08:00 日切点由累计流量估算）"
+        }
+      }
+    }
+  }
+}

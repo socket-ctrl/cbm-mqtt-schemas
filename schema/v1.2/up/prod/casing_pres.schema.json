@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/prod/casing_pres.schema.json",
+  "title": "套管压力生产数据上报",
+  "description": "网关→平台生产数据（协议 4.4.1，套压）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/casing_pres。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device_type", "status", "pres"],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "casing_pres",
+          "description": "设备类型：casing_pres(套压)"
+        },
+        "status": {
+          "$ref": "../../common/defs.schema.json#/$defs/status"
+        },
+        "pres": {
+          "type": "number",
+          "description": "压力值（套压），MPa"
+        }
+      }
+    }
+  }
+}

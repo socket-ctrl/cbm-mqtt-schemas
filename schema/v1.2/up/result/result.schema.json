@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/result/result.schema.json",
+  "title": "普通指令执行结果",
+  "description": "网关→平台普通指令执行结果（协议 5.3.1）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/result/{device}，{device} ∈ plunger/esp/reinject/rein_valve/gas_valve（连锁指令执行结果见 result/seq_res）。网关在 header 中原样回显下行报文的 msg_id。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "result"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd_id", "execute_status", "elapsed_time", "fail_reason"],
+      "properties": {
+        "cmd_id": {
+          "type": "string",
+          "description": "对应的下行指令 ID，原样回显 ctrl 下行报文 cmd 节点中的 cmd_id"
+        },
+        "execute_status": {
+          "type": "string",
+          "enum": ["success", "failed", "timeout"],
+          "description": "执行状态：success(执行成功) / failed(执行失败) / timeout(执行超时，网关在 timeout 指定时间内未执行完毕时上报)"
+        },
+        "elapsed_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "执行耗时，秒"
+        },
+        "fail_reason": {
+          "type": ["string", "null"],
+          "description": "执行失败原因，成功为 null"
+        }
+      }
+    }
+  }
+}

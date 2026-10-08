@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/down/ctrl/plunger.schema.json",
+  "title": "柱塞泵控制指令下发",
+  "description": "平台→网关控制指令（协议 5.1.2，射流泵井场地面柱塞泵）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/ctrl/plunger。动作枚举：start(启动，无参数)、stop(停机，无参数)、set_pres(设定泵压，value=目标泵压，MPa)、set_freq(设定频率，value=目标频率，Hz)、clear_alarm(消除变频器报警，无参数)。start/stop/clear_alarm 不得携带 value 字段（V1.2 起无参数化）。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "cmd"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "cmd": {
+      "description": "控制指令结构（协议 5.1.1）",
+      "allOf": [
+        {
+          "$ref": "../../common/defs.schema.json#/$defs/cmd_base"
+        },
+        {
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["start", "stop", "set_pres", "set_freq", "clear_alarm"],
+              "description": "动作类型：start(启动) / stop(停机) / set_pres(设定泵压) / set_freq(设定频率) / clear_alarm(消除变频器报警)"
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": ["set_pres", "set_freq"]
+              }
+            },
+            "required": ["action"]
+          },
+          "then": {
+            "required": ["value"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": ["start", "stop", "clear_alarm"]
+              }
+            },
+            "required": ["action"]
+          },
+          "then": {
+            "not": {
+              "required": ["value"]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

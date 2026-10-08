@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/algo/video.schema.json",
+  "title": "视频识别算法结果上报",
+  "description": "网关→平台人工智能识别算法上报（协议 6.2）。Topic: /cbm/up/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。AlgorithmNo：1(人车识别) / 2(液位识别)。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json",
+      "not": {
+        "required": ["well_id"]
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device_type", "AlgorithmNo", "isalarm", "detection", "alarm_objects", "confidence", "img", "alarm_content"],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "video",
+          "description": "设备类型：video(视频识别)"
+        },
+        "AlgorithmNo": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "识别算法编号：1(人车识别) / 2(液位识别)"
+        },
+        "isalarm": {
+          "type": "boolean",
+          "description": "是否报警：true(报警) / false(未报警，上传采集图片)"
+        },
+        "detection": {
+          "type": "array",
+          "description": "识别目标信息集合，根据以下参数可以在图片中标定出目标",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["box", "score", "class"],
+            "properties": {
+              "box": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 4,
+                "maxItems": 4,
+                "description": "识别目标在图片中的坐标 [top, left, right, bottom]",
+                "examples": [[0, 1002, 197, 1221]]
+              },
+              "score": {
+                "type": "string",
+                "description": "识别目标置信度（字符串）",
+                "examples": ["0.56"]
+              },
+              "class": {
+                "type": "string",
+                "description": "识别目标类型的 ID 序号（字符串）",
+                "examples": ["0"]
+              }
+            }
+          }
+        },
+        "alarm_objects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "识别目标名称集合",
+          "examples": [["person"]]
+        },
+        "confidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "识别目标置信度集合（字符串）",
+          "examples": [["0.56"]]
+        },
+        "img": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "description": "当前图片 base64 编码，可为空字符串"
+        },
+        "alarm_content": {
+          "type": "string",
+          "description": "报警内容",
+          "examples": ["识别到目标报警"]
+        }
+      }
+    }
+  }
+}

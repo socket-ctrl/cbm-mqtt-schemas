@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/down/ctrl/gas_valve.schema.json",
+  "title": "放气阀控制指令下发",
+  "description": "平台→网关控制指令（协议 5.1.2，井场放气阀门/气体）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/ctrl/gas_valve。动作枚举：set_valve(设定开度，value=目标开度，0-100%)。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "cmd"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "cmd": {
+      "description": "控制指令结构（协议 5.1.1）",
+      "allOf": [
+        {
+          "$ref": "../../common/defs.schema.json#/$defs/cmd_base"
+        },
+        {
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["set_valve"],
+              "description": "动作类型：set_valve(设定开度)"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "目标开度，%"
+            }
+          },
+          "required": ["value"]
+        }
+      ]
+    }
+  }
+}

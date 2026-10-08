@@ -1,0 +1,58 @@
+name: Schema CI
+
+on:
+  pull_request:
+    paths:
+      - "schema/**"
+      - "docs/**"
+  push:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 校验所有 schema 文件 JSON 语法与元数据
+        shell: bash
+        run: |
+          fail=0
+          for f in $(find schema -name '*.schema.json'); do
+            # JSON 语法校验
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::JSON 语法错误"; fail=1; continue; }
+            # 元数据完整性
+            node -e "
+              const s = JSON.parse(require('fs').readFileSync('$f','utf8'));
+              const need = ['\$schema','\$id','title','description','type'];
+              const miss = need.filter(k => !(k in s));
+              if (miss.length) { console.error('$f 缺少字段: ' + miss.join(',')); process.exit(1); }
+              if (s.\$schema !== 'https://json-schema.org/draft/2020-12/schema') { console.error('$f \$schema 非 2020-12'); process.exit(1); }
+            " || fail=1
+          done
+          exit $fail
+
+      - name: ajv 编译校验（含 $ref 解析）
+        run: |
+          npx --yes ajv-cli@5 compile \
+            --spec=draft2020 \
+            --strict=false \
+            -r "schema/v1.2/common/*.schema.json" \
+            --all-errors \
+            $(find schema/v1.2 -name '*.schema.json' ! -path '*/common/*' | sed 's/^/-s /')
+
+      - name: 历史版本目录不可变检查
+        shell: bash
+        run: |
+          # 已发布版本（v1.2 及之前）在 main 上后不允许删除；此处检查 PR 是否删除了已存在的历史 schema 文件
+          git fetch origin main --depth=1 || true
+          deleted=$(git diff --name-only origin/main...HEAD 2>/dev/null | grep '^schema/.*\.schema\.json$' | while read f; do
+            [ ! -f "$f" ] && echo "$f"
+          done)
+          if [ -n "$deleted" ]; then
+            echo "::error::检测到删除已发布的 schema 文件（历史版本不可变）:"; echo "$deleted"; exit 1
+          fi

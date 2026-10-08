@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/prod/reinject.schema.json",
+  "title": "回注水系统生产数据上报",
+  "description": "网关→平台生产数据（协议 4.3，回注水系统，电潜泵井场版本）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/reinject。speed_setpoint 为设备当前生效转速设定值回显。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "device_type", "status", "run_status", "ctrl_mode",
+        "speed", "speed_setpoint", "motor_current", "motor_voltage", "motor_power",
+        "instant_flow", "total_flow", "runtime_hours",
+        "fault_code", "fault_description"
+      ],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "reinject",
+          "description": "设备类型：reinject(回注水系统)"
+        },
+        "status": {
+          "$ref": "../../common/defs.schema.json#/$defs/status"
+        },
+        "run_status": {
+          "$ref": "../../common/defs.schema.json#/$defs/run_status"
+        },
+        "ctrl_mode": {
+          "$ref": "../../common/defs.schema.json#/$defs/ctrl_mode"
+        },
+        "speed": {
+          "type": "number",
+          "description": "转速，rpm"
+        },
+        "speed_setpoint": {
+          "type": "number",
+          "description": "转速设定值，rpm（设备回显）"
+        },
+        "motor_current": {
+          "type": "number",
+          "description": "电机电流，A"
+        },
+        "motor_voltage": {
+          "type": "number",
+          "description": "电机电压，V"
+        },
+        "motor_power": {
+          "type": "number",
+          "description": "电机功率，kW"
+        },
+        "instant_flow": {
+          "type": "number",
+          "description": "瞬时回注流量，m³/h"
+        },
+        "total_flow": {
+          "type": "number",
+          "description": "累计回注流量，m³"
+        },
+        "runtime_hours": {
+          "type": "number",
+          "minimum": 0,
+          "description": "累计运行时间，小时"
+        },
+        "fault_code": {
+          "$ref": "../../common/defs.schema.json#/$defs/fault_code"
+        },
+        "fault_description": {
+          "$ref": "../../common/defs.schema.json#/$defs/fault_description"
+        }
+      }
+    }
+  }
+}

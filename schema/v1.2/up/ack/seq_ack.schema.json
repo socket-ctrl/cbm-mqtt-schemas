@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/ack/seq_ack.schema.json",
+  "title": "连锁指令确认回复",
+  "description": "网关→平台连锁指令确认回复（协议 5.2）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/ack/seq_ack。报文结构与通用控制指令确认（ack.schema.json）完全一致，故直接复用其定义。",
+  "$ref": "ack.schema.json"
+}

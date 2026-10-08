@@ -1,0 +1,35 @@
+name: 缺陷反馈
+description: 协议文档或 Schema 定义存在错误、歧义或自相矛盾
+labels: ["缺陷", "待评审"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: 问题位置
+      description: 文档章节（如 4.2.1）或 schema 文件路径（如 schema/v1.2/up/prod/flow_large.schema.json）
+    validations:
+      required: true
+  - type: dropdown
+    id: problem_type
+    attributes:
+      label: 问题类型
+      options:
+        - 文档与 Schema 不一致
+        - 文档内部自相矛盾
+        - 字段/单位/枚举定义错误
+        - Schema 校验行为不符预期
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: 问题描述
+      description: 具体哪里有误，正确的应该是什么
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: 报文示例（可选）
+      description: 能复现问题的实际报文 JSON

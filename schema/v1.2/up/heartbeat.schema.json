@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/heartbeat.schema.json",
+  "title": "网关心跳上报",
+  "description": "网关→平台心跳（协议 3.2）。Topic: /cbm/up/{gw_id}/sys/heartbeat。网关级全局报文，无消息头 header、无 {wf_id}/{well_id} 层级。平台超过 2 次未收到心跳则判定网关离线，因此心跳报文中 gw_status 仅出现 online。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["heartbeat"],
+  "properties": {
+    "heartbeat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gw_status", "sys_uptime", "ntp_synced"],
+      "properties": {
+        "gw_status": {
+          "type": "string",
+          "enum": ["online"],
+          "description": "网关整体状态：online（离线状态由平台按心跳超时判定，不由网关上报）"
+        },
+        "sys_uptime": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "网关系统运行时间，秒"
+        },
+        "ntp_synced": {
+          "type": "boolean",
+          "description": "是否已同步 NTP 时间：true(已同步) / false(未同步)"
+        }
+      }
+    }
+  }
+}

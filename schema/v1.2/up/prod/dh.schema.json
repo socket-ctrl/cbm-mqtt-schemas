@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/prod/dh.schema.json",
+  "title": "井下压力计生产数据上报",
+  "description": "网关→平台生产数据（协议 4.4.2，井下数据/井下压力计）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/dh。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device_type", "status", "pres", "temperature", "submergence"],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "dh",
+          "description": "设备类型：dh(井下压力计，downhole)"
+        },
+        "status": {
+          "$ref": "../../common/defs.schema.json#/$defs/status"
+        },
+        "pres": {
+          "type": "number",
+          "description": "井底流压，MPa"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "井底温度，℃"
+        },
+        "submergence": {
+          "type": "number",
+          "description": "沉没度，m"
+        }
+      }
+    }
+  }
+}

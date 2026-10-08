@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/down/algo/video.schema.json",
+  "title": "视频识别算法配置下发",
+  "description": "平台→网关人工智能识别算法配置参数（协议 5.1.4）。Topic: /cbm/down/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，Topic 挂井场（{wf_id}）层级，消息头省略 well_id 字段。AlgorithmNo 算法编号：1(人车识别) / 2(液位识别)。没有配置的参数可以不用下发，故 enabletimedupload/timeduploadinterval/alarminterval 为可选字段。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "cmd"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json",
+      "not": {
+        "required": ["well_id"]
+      }
+    },
+    "cmd": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd_id", "AlgorithmNo"],
+      "properties": {
+        "cmd_id": {
+          "type": "string",
+          "description": "指令唯一标识，网关在 ack/algo/video 确认回复中原样回显",
+          "examples": ["CMD20240115005"]
+        },
+        "AlgorithmNo": {
+          "type": "integer",
+          "enum": [1, 2],
+          "description": "算法编号：1(人车识别) / 2(液位识别)"
+        },
+        "enabletimedupload": {
+          "type": "boolean",
+          "description": "开启定时上传图片：true(开启) / false(关闭)"
+        },
+        "timeduploadinterval": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "定时上传图片间隔，毫秒（ms）。填报数值，由平台按需下发（协议文档中出现的具体数值仅为展示示例）",
+          "examples": [600000]
+        },
+        "alarminterval": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "报警间隔，毫秒（ms）。填报数值，由平台按需下发（协议文档中出现的具体数值仅为展示示例）",
+          "examples": [60000]
+        }
+      }
+    }
+  }
+}

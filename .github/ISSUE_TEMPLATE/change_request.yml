@@ -1,0 +1,44 @@
+name: 协议变更申请
+description: 修改现有协议字段、报文结构或约定
+labels: ["变更申请", "待评审"]
+body:
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: 变更类型
+      options:
+        - 字段修改（名称/类型/单位/取值范围）
+        - 报文结构修改
+        - Topic 调整
+        - 通信约定调整（QoS/心跳/超时等）
+        - 其他
+    validations:
+      required: true
+  - type: input
+    id: topic
+    attributes:
+      label: 涉及 Topic
+      description: 如 /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/plunger
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: 现状描述
+      description: 当前协议/Schema 是如何定义的，附文档章节或 schema 文件路径
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 希望改成什么，附建议的报文示例（JSON）
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 变更理由与影响范围
+      description: 为什么需要变更；对已部署网关/平台的影响评估
+    validations:
+      required: true

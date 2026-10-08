@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/ack/ack.schema.json",
+  "title": "控制指令确认回复",
+  "description": "网关→平台控制指令确认回复（协议 5.2）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/ack/{device}，{device} ∈ plunger/esp/reinject/rein_valve/gas_valve（连锁指令见 ack/seq_ack，算法配置见 ack/algo/video）。网关在 header 中原样回显下行报文的 msg_id，在 ack 中原样回显下行 cmd 节点的 cmd_id。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "ack"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd_id", "ack_status", "ack_reason"],
+      "properties": {
+        "cmd_id": {
+          "type": "string",
+          "description": "对应的下行指令 ID，原样回显 ctrl/seq 下行报文 cmd 节点中的 cmd_id"
+        },
+        "ack_status": {
+          "$ref": "../../common/defs.schema.json#/$defs/ack_status"
+        },
+        "ack_reason": {
+          "type": ["string", "null"],
+          "description": "确认原因说明，成功为 null；失败时如 \"设备离线，无法执行\"、\"指令互斥，无法执行\"、\"参数错误\" 等"
+        }
+      }
+    }
+  }
+}

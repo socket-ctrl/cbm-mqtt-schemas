@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/down/algo/target.schema.json",
+  "title": "生产制度与目标下发",
+  "description": "平台→网关生产制度与目标下发（协议 6.1）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/algo/target。prod_period 生产制度枚举：drain_water(排水期) / increase_prod(提产期) / stable_prod(稳产期) / decrease_prod(递减期)。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "prod_target"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "prod_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effective_date", "prod_period", "targets"],
+      "properties": {
+        "effective_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "生效日期，格式 YYYY-MM-DD",
+          "examples": ["2024-01-15"]
+        },
+        "prod_period": {
+          "$ref": "../../common/defs.schema.json#/$defs/prod_period"
+        },
+        "targets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pres_loop", "casing_loop", "gas_loop"],
+          "properties": {
+            "pres_loop": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["target_pres"],
+              "properties": {
+                "target_pres": {
+                  "type": "number",
+                  "description": "目标井下流压，MPa"
+                }
+              }
+            },
+            "casing_loop": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["target_casing_pres", "target_gas_increase"],
+              "properties": {
+                "target_casing_pres": {
+                  "type": "number",
+                  "description": "目标套压，MPa"
+                },
+                "target_gas_increase": {
+                  "type": "number",
+                  "description": "提产目标，m³"
+                }
+              }
+            },
+            "gas_loop": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["target_gas_prod"],
+              "properties": {
+                "target_gas_prod": {
+                  "type": "number",
+                  "description": "产气量目标，m³/h"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

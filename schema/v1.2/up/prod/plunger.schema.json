@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbm.example/schemas/v1.2/up/prod/plunger.schema.json",
+  "title": "柱塞泵生产数据上报",
+  "description": "网关→平台生产数据（协议 4.1.1，射流泵井场地面柱塞泵）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/plunger。以 _setpoint 结尾的字段为底层设备当前生效设定值的回显；异常通过 status/run_status/fault_code 表达。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "data"],
+  "properties": {
+    "header": {
+      "$ref": "../../common/header.schema.json"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "device_type", "status", "run_status", "ctrl_mode", "prod_period",
+        "pump_temperature", "valve_feedback", "inlet_pres", "liquid_level",
+        "pump_pres_setpoint", "valve_setpoint", "instant_flow", "total_flow",
+        "low_instant_flow", "low_total_flow",
+        "A_voltage", "B_voltage", "C_voltage", "A_current", "B_current", "C_current",
+        "total_energy", "motor_freq", "motor_current", "motor_freq_setpoint",
+        "pump_pres", "runtime_hours", "fault_code", "fault_description"
+      ],
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "const": "plunger",
+          "description": "设备类型：plunger(柱塞泵)"
+        },
+        "status": {
+          "$ref": "../../common/defs.schema.json#/$defs/status"
+        },
+        "run_status": {
+          "$ref": "../../common/defs.schema.json#/$defs/run_status"
+        },
+        "ctrl_mode": {
+          "$ref": "../../common/defs.schema.json#/$defs/ctrl_mode"
+        },
+        "prod_period": {
+          "$ref": "../../common/defs.schema.json#/$defs/prod_period"
+        },
+        "pump_temperature": {
+          "type": "number",
+          "description": "泵头温度，℃"
+        },
+        "valve_feedback": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "高压阀门开度反馈，0-100%"
+        },
+        "inlet_pres": {
+          "type": "number",
+          "description": "井口注入压力，MPa"
+        },
+        "liquid_level": {
+          "type": "number",
+          "description": "水箱液位，m"
+        },
+        "pump_pres_setpoint": {
+          "type": "number",
+          "description": "泵压设定值，MPa（设备回显）"
+        },
+        "valve_setpoint": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "高压阀门开度设定值，0-100%（设备回显）"
+        },
+        "instant_flow": {
+          "type": "number",
+          "description": "高压水瞬时流量，m³/h"
+        },
+        "total_flow": {
+          "type": "number",
+          "description": "高压水累计流量，m³"
+        },
+        "low_instant_flow": {
+          "type": "number",
+          "description": "低压水瞬时流量，m³/h"
+        },
+        "low_total_flow": {
+          "type": "number",
+          "description": "低压水累计流量，m³"
+        },
+        "A_voltage": {
+          "type": "number",
+          "description": "A相电压，V"
+        },
+        "B_voltage": {
+          "type": "number",
+          "description": "B相电压，V"
+        },
+        "C_voltage": {
+          "type": "number",
+          "description": "C相电压，V"
+        },
+        "A_current": {
+          "type": "number",
+          "description": "A相电流，A"
+        },
+        "B_current": {
+          "type": "number",
+          "description": "B相电流，A"
+        },
+        "C_current": {
+          "type": "number",
+          "description": "C相电流，A"
+        },
+        "total_energy": {
+          "type": "number",
+          "description": "累计耗电量，kWh"
+        },
+        "motor_freq": {
+          "type": "number",
+          "description": "变频器频率，Hz"
+        },
+        "motor_current": {
+          "type": "number",
+          "description": "变频器电流，A"
+        },
+        "motor_freq_setpoint": {
+          "type": "number",
+          "description": "频率设定值，Hz（设备回显）"
+        },
+        "pump_pres": {
+          "type": "number",
+          "description": "泵压，MPa"
+        },
+        "runtime_hours": {
+          "type": "number",
+          "minimum": 0,
+          "description": "累计运行时间，小时"
+        },
+        "fault_code": {
+          "$ref": "../../common/defs.schema.json#/$defs/fault_code"
+        },
+        "fault_description": {
+          "$ref": "../../common/defs.schema.json#/$defs/fault_description"
+        }
+      }
+    }
+  }
+}
