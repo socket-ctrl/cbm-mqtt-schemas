@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/common/defs.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/common/defs.schema.json",
   "title": "公共可复用定义",
   "description": "煤层气智能井场 MQTT 协议 V1.2 各报文 Schema 共用的可复用定义（UNIX 毫秒时间戳、控制指令基础结构、公共枚举等）。本文件仅作为定义容器，通过 JSON Pointer（#/$defs/...）被其他 Schema 引用，不直接用于校验完整报文。",
   "type": "object",

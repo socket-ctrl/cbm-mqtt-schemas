@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/down/ctrl/reinject.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/down/ctrl/reinject.schema.json",
   "title": "回注水系统控制指令下发",
   "description": "平台→网关控制指令（协议 5.1.2，电潜泵井场回注水系统）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/ctrl/reinject。动作枚举：start(启动，无参数)、stop(停机，无参数)、set_speed(设定转速，value=目标转速，rpm)。start/stop 不得携带 value 字段。",
   "type": "object",

@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/result/result.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/result/result.schema.json",
   "title": "普通指令执行结果",
   "description": "网关→平台普通指令执行结果（协议 5.3.1）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/result/{device}，{device} ∈ plunger/esp/reinject/rein_valve/gas_valve（连锁指令执行结果见 result/seq_res）。网关在 header 中原样回显下行报文的 msg_id。",
   "type": "object",

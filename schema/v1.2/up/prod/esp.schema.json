@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/prod/esp.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/esp.schema.json",
   "title": "电潜泵生产数据上报",
   "description": "网关→平台生产数据（协议 4.1.2，电潜泵井场井下电潜泵）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/esp。speed（泵实际转速）与 freq（电机工作频率）为两个独立测量量；以 _setpoint 结尾的字段为底层设备当前生效设定值的回显。",
   "type": "object",

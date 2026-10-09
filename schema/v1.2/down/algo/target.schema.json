@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/down/algo/target.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/down/algo/target.schema.json",
   "title": "生产制度与目标下发",
   "description": "平台→网关生产制度与目标下发（协议 6.1）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/algo/target。prod_period 生产制度枚举：drain_water(排水期) / increase_prod(提产期) / stable_prod(稳产期) / decrease_prod(递减期)。",
   "type": "object",

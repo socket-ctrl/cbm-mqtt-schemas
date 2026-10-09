@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/ack/algo_video_ack.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/ack/algo_video_ack.schema.json",
   "title": "视频算法配置指令确认回复",
   "description": "网关→平台人工智能识别算法配置指令确认回复（协议 5.2.1）。Topic: /cbm/up/{gw_id}/{wf_id}/ack/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。网关在 header 中回显下行 msg_id，在 ack 中回显下行 cmd_id 与 AlgorithmNo。",
   "type": "object",

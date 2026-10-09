@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/ack/ack.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/ack/ack.schema.json",
   "title": "控制指令确认回复",
   "description": "网关→平台控制指令确认回复（协议 5.2）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/ack/{device}，{device} ∈ plunger/esp/reinject/rein_valve/gas_valve（连锁指令见 ack/seq_ack，算法配置见 ack/algo/video）。网关在 header 中原样回显下行报文的 msg_id，在 ack 中原样回显下行 cmd 节点的 cmd_id。",
   "type": "object",

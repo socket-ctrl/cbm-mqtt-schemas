@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/down/algo/video.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/down/algo/video.schema.json",
   "title": "视频识别算法配置下发",
   "description": "平台→网关人工智能识别算法配置参数（协议 5.1.4）。Topic: /cbm/down/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，Topic 挂井场（{wf_id}）层级，消息头省略 well_id 字段。AlgorithmNo 算法编号：1(人车识别) / 2(液位识别)。没有配置的参数可以不用下发，故 enabletimedupload/timeduploadinterval/alarminterval 为可选字段。",
   "type": "object",

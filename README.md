@@ -22,7 +22,7 @@
 
 ## 校验方式
 
-Schema 采用 JSON Schema Draft 2020-12，`$id` 基址为 `https://cbm.example/schemas/v1.2/`（以实际发布域名为准）。可用任何支持 2020-12 的校验库（如 [ajv](https://ajv.js.org/)）对 MQTT payload 进行校验。
+Schema 采用 JSON Schema Draft 2020-12，`$id` 基址为 `https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/`（经 GitHub Pages 发布，Pages 部署完成后即可通过 URL 直接引用）。可用任何支持 2020-12 的校验库（如 [ajv](https://ajv.js.org/)）对 MQTT payload 进行校验。
 
 ## 协作流程（外部接入方请阅读）
 

@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/prod/pipe_pres.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/pipe_pres.schema.json",
   "title": "汇管压力生产数据上报（井场级）",
   "description": "网关→平台生产数据（协议 4.4.3，汇管压力）。Topic: /cbm/up/{gw_id}/{wf_id}/prod/pipe_pres。汇管为井场级共享设施，Topic 挂井场（{wf_id}）层级，消息头省略 well_id 字段（本 Schema 中已强制约束 header 不得携带 well_id）。",
   "type": "object",

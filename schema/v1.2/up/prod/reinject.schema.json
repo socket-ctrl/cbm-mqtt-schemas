@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/prod/reinject.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/reinject.schema.json",
   "title": "回注水系统生产数据上报",
   "description": "网关→平台生产数据（协议 4.3，回注水系统，电潜泵井场版本）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/reinject。speed_setpoint 为设备当前生效转速设定值回显。",
   "type": "object",

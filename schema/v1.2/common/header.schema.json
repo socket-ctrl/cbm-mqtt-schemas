@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/common/header.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/common/header.schema.json",
   "title": "通用消息头 header",
   "description": "MQTT 报文通用消息头（协议 3.1）。除网关心跳外，所有上行/下行报文均包含本消息头；井场级消息（Topic 无 {well_id} 层级，如汇管压力、视频算法）省略 well_id 字段。Topic 中的身份标识（{gw_id}/{wf_id}/{well_id}）必须与本消息头对应字段一致，接收方对身份不一致的消息记录后丢弃。",
   "type": "object",

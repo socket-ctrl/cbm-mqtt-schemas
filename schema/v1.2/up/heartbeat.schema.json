@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/heartbeat.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/heartbeat.schema.json",
   "title": "网关心跳上报",
   "description": "网关→平台心跳（协议 3.2）。Topic: /cbm/up/{gw_id}/sys/heartbeat。网关级全局报文，无消息头 header、无 {wf_id}/{well_id} 层级。平台超过 2 次未收到心跳则判定网关离线，因此心跳报文中 gw_status 仅出现 online。",
   "type": "object",

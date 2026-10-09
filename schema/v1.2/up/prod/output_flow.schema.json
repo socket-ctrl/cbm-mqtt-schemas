@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/prod/output_flow.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/output_flow.schema.json",
   "title": "产水流量计生产数据上报",
   "description": "网关→平台生产数据（协议 4.2.3，产水流量计）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/output_flow。last_prod/daily_prod 统一口径：每日 08:00 日切点由累计流量估算。",
   "type": "object",

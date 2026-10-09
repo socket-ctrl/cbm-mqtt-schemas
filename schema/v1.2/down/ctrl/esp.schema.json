@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/down/ctrl/esp.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/down/ctrl/esp.schema.json",
   "title": "电潜泵控制指令下发",
   "description": "平台→网关控制指令（协议 5.1.2，电潜泵井场井下电潜泵）。Topic: /cbm/down/{gw_id}/{wf_id}/{well_id}/ctrl/esp。动作枚举：start(启动，无参数)、stop(停机，无参数)、set_speed(设定转速，value=目标转速，rpm)、reverse(反转启动，value=反转速度，rpm；V1.2 已删除反转持续时长 time 参数)。start/stop 不得携带 value 字段。",
   "type": "object",

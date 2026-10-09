@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/prod/flow_large.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/flow_large.schema.json",
   "title": "大产气流量计生产数据上报",
   "description": "网关→平台生产数据（协议 4.2.1，大产气流量计）。Topic: /cbm/up/{gw_id}/{wf_id}/{well_id}/prod/flow_large。",
   "type": "object",

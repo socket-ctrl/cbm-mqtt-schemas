@@ -1,6 +1,6 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://cbm.example/schemas/v1.2/up/algo/video.schema.json",
+  "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/algo/video.schema.json",
   "title": "视频识别算法结果上报",
   "description": "网关→平台人工智能识别算法上报（协议 6.2）。Topic: /cbm/up/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。AlgorithmNo：1(人车识别) / 2(液位识别)。",
   "type": "object",
