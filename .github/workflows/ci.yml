@@ -25,10 +25,12 @@ jobs:
           for f in $(find schema -name '*.schema.json'); do
             # JSON 语法校验
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::JSON 语法错误"; fail=1; continue; }
-            # 元数据完整性
+            # 元数据完整性（$ref 包装文件允许省略 type）
             node -e "
               const s = JSON.parse(require('fs').readFileSync('$f','utf8'));
-              const need = ['\$schema','\$id','title','description','type'];
+              const need = ['\$schema','\$id','title','description'];
+              const isWrapper = '\$ref' in s;
+              if (!isWrapper && !('type' in s)) { console.error('$f 缺少字段: type'); process.exit(1); }
               const miss = need.filter(k => !(k in s));
               if (miss.length) { console.error('$f 缺少字段: ' + miss.join(',')); process.exit(1); }
               if (s.\$schema !== 'https://json-schema.org/draft/2020-12/schema') { console.error('$f \$schema 非 2020-12'); process.exit(1); }
