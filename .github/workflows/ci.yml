@@ -40,12 +40,13 @@ jobs:
 
       - name: ajv 编译校验（含 $ref 解析）
         run: |
+          refs=$(find schema/v1.2 -name '*.schema.json' ! -name 'seq_ack.schema.json' | sed 's/^/-r /')
           npx --yes ajv-cli@5 compile \
             --spec=draft2020 \
             --strict=false \
-            -r "schema/v1.2/common/*.schema.json" \
+            $refs \
             --all-errors \
-            $(find schema/v1.2 -name '*.schema.json' ! -path '*/common/*' | sed 's/^/-s /')
+            $(find schema/v1.2 -name '*.schema.json' | sed 's/^/-s /')
 
       - name: 历史版本目录不可变检查
         shell: bash
