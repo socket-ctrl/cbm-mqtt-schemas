@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/result/result.schema.json",
   "title": "普通指令执行结果",

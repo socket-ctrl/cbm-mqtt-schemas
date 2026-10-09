@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/prod/output_flow.schema.json",
   "title": "产水流量计生产数据上报",
