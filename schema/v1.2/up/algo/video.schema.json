@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://socket-ctrl.github.io/cbm-mqtt-schemas/schema/v1.2/up/algo/video.schema.json",
   "title": "视频识别算法结果上报",
-  "description": "网关→平台人工智能识别算法上报（协议 6.2）。Topic: /cbm/up/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。AlgorithmNo：1(人车识别) / 2(液位识别)。",
+  "description": "网关→平台人工智能识别算法上报（协议 6.2）。Topic: /cbm/up/{gw_id}/{wf_id}/algo/video。视频为井场级共享设施，消息头省略 well_id 字段。AlgorithmNo：1(人车识别) / 2(液位识别)。data 中可选回显当前生效的算法配置参数（enabletimedupload/timeduploadinterval/alarminterval，与协议 5.1.4 下行配置字段同名）：已配置即每次上报携带，从未配置过则省略对应字段。",
   "type": "object",
   "additionalProperties": false,
   "required": ["header", "data"],
@@ -88,6 +88,20 @@
           "type": "string",
           "description": "报警内容",
           "examples": ["识别到目标报警"]
+        },
+        "enabletimedupload": {
+          "type": "boolean",
+          "description": "当前生效配置回显：开启定时上传图片 true(开启) / false(关闭)；从未配置过则省略（对应协议 5.1.4 下行配置）"
+        },
+        "timeduploadinterval": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "当前生效配置回显：定时上传图片间隔，毫秒（ms）；从未配置过则省略（对应协议 5.1.4 下行配置）"
+        },
+        "alarminterval": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "当前生效配置回显：报警间隔，毫秒（ms）；从未配置过则省略（对应协议 5.1.4 下行配置）"
         }
       }
     }

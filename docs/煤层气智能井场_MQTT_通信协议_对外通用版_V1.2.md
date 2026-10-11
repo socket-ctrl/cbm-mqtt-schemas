@@ -645,6 +645,8 @@
 }
 ```
 
+**参数回显约定**：配置生效后，网关在数据上报 `/cbm/up/{gw_id}/{wf_id}/algo/video`（见 6.2）中以同名字段回显当前生效的 `enabletimedupload` / `timeduploadinterval` / `alarminterval`；从未配置过的参数省略不报。ack 确认回复（5.2.1）不携带参数回显。
+
 ### 5.2 指令确认回复（网关→平台）
 
 **Topic**: `/cbm/up/{gw_id}/{wf_id}/{well_id}/ack/{device}`
@@ -801,6 +803,7 @@ ack_reason
 ### 6.2 人工智能识别算法上报
 **Topic**: `/cbm/up/{gw_id}/{wf_id}/algo/video`
 视频为井场级共享设施，Topic 挂井场（`{wf_id}`）层级，消息头省略 `well_id` 字段。
+若 5.1.4 算法配置参数已下发生效，`data` 中以同名字段回显当前生效的 `enabletimedupload` / `timeduploadinterval` / `alarminterval`；从未配置过的参数省略不报。
 
 ```json
 {
@@ -816,7 +819,10 @@ ack_reason
     "alarm_objects":["person"],       //识别目标名称集合
     "confidence":["0.56"],            //识别目标置信度集合
     "img":"",                         //当前图片 base64图片编码
-    "alarm_content":"识别到目标报警"   //报警内容
+    "alarm_content":"识别到目标报警",  //报警内容
+    "enabletimedupload":true,         //当前生效配置回显：开启定时上传图片（未配置过则省略）
+    "timeduploadinterval":600000,     //当前生效配置回显：定时上传图片间隔 ms（未配置过则省略）
+    "alarminterval":60000             //当前生效配置回显：报警间隔 ms（未配置过则省略）
   }
 }
 ```
